@@ -5,6 +5,10 @@ import com.learning.enums.Gender;
 import java.time.LocalDate;
 
 public class Person {
+
+    static int idCount = 1;
+
+    int id;
     String firstName;
     String lastName;
     Gender gender;
@@ -15,12 +19,22 @@ public class Person {
     public Person(){}
 
     public Person(String firstName, String lastName, Gender gender, int age, LocalDate dateOfBirth, String email) {
+        this.id = idCount;
+        idCount++;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.age = age;
         this.dateOfBirth = dateOfBirth;
         this.email = email;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Gender getGender() {
