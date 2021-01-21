@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping(path = "/person")
@@ -67,6 +64,15 @@ public class PersonController {
         logger.info(String.valueOf(pathVariables));
     }
 
+    @GetMapping(value = {"/test" ,"/test/{name}"})
+    public void showNameInConsole(@PathVariable Optional<String> name){
+        if(name.isPresent()){
+            System.out.println(name.get());
+        }
+        else{
+            System.out.println("Name is empty");
+        }
+    }
 
 
 
