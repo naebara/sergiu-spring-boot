@@ -16,7 +16,8 @@ public class Person {
     LocalDate dateOfBirth;
     String email;
 
-    public Person(){}
+    public Person() {
+    }
 
     public Person(String firstName, String lastName, Gender gender, int age, LocalDate dateOfBirth, String email) {
         this.id = idCount;
