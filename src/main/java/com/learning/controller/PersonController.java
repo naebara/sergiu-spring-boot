@@ -1,6 +1,5 @@
 package com.learning.controller;
 
-import com.learning.enums.Gender;
 import com.learning.model.Person;
 import com.learning.service.PersonService;
 import org.slf4j.Logger;
@@ -11,8 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
-import java.util.*;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/person")
@@ -24,13 +22,12 @@ public class PersonController {
 
 
     @GetMapping("/getAllPersons")
-    public List<Person> getAllPerson(){
+    public List<Person> getAllPerson() {
         return personService.findAll();
     }
 
     @GetMapping("/getPersonById/{someId}")
     public Person getPersonById(@PathVariable(value = "someId") Integer personId) throws Exception {
-
         return personService.findPersonById(personId);
     }
 
