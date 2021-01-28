@@ -1,7 +1,7 @@
 package com.learning.service;
 
 import com.learning.enums.Gender;
-import com.learning.exeptions.PersonNotFoundException;
+import com.learning.exeptions.ResourceNotFoundException;
 import com.learning.model.Person;
 import org.springframework.stereotype.Service;
 
@@ -23,14 +23,14 @@ public class PersonService {
         return personList.stream()
                 .filter(person -> person.getId() == personId)
                 .findFirst()
-                .orElseThrow(() -> new PersonNotFoundException("User with id " + personId + " not found!"));
+                .orElseThrow(() -> new ResourceNotFoundException("User with id " + personId + " not found!"));
     }
 
     public Person findByNameAndId(String name, int id) {
         return personList.stream()
                 .filter(person -> person.getId() == id && person.getFirstName().equals(name))
                 .findFirst()
-                .orElseThrow(() -> new PersonNotFoundException("Person with id : " + id + " and name: " + name + " not found!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Person with id : " + id + " and name: " + name + " not found!"));
     }
 
     private List<Person> findAllPersons() {

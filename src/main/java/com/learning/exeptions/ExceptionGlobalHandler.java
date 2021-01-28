@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class ExceptionGlobalHandler {
 
-    @ExceptionHandler(PersonNotFoundException.class)
-    public ResponseEntity<ExeptionResponse> handlePersonNotFoundException(PersonNotFoundException exception) {
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ExeptionResponse> handlePersonNotFoundException(ResourceNotFoundException exception) {
         ExeptionResponse er = new ExeptionResponse();
         er.setMessage(exception.getMessage());
         er.setTime(LocalDateTime.now());
