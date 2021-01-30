@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,6 +17,12 @@ public class PersonService {
 
     public List<Person> findAll() {
         return this.personList;
+    }
+
+    public Person createPerson(Person person) {
+        person.setId(Person.generateNextId());
+        this.personList.add(person);
+        return personList.get(personList.size() - 1);
     }
 
     public Person findPersonById(int personId) {
@@ -34,10 +40,11 @@ public class PersonService {
     }
 
     private List<Person> findAllPersons() {
-        return Arrays.asList(
-                new Person("John", "Doe", Gender.MALE, 23, LocalDate.of(1998, Month.MARCH, 5), "john.doe@gmail.com"),
-                new Person("Mary", "Misk", Gender.FEMALE, 67, LocalDate.of(1954, Month.JANUARY, 8), "john.doe@gmail.com")
-        );
+        ArrayList<Person> people = new ArrayList<>();
+        people.add(new Person("John", "Doe", Gender.MALE, 23, LocalDate.of(1998, Month.MARCH, 5), "john.doe@gmail.com"));
+        people.add(new Person("Mary", "Misk", Gender.FEMALE, 67, LocalDate.of(1954, Month.JANUARY, 8), "john.doe@gmail.com"));
+        System.out.println(Person.generateNextId());
+        return people;
     }
 
 }

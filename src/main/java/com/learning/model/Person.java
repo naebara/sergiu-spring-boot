@@ -1,5 +1,6 @@
 package com.learning.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.learning.enums.Gender;
 
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ public class Person {
     String lastName;
     Gender gender;
     int age;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     LocalDate dateOfBirth;
     String email;
 
@@ -28,6 +30,11 @@ public class Person {
         this.age = age;
         this.dateOfBirth = dateOfBirth;
         this.email = email;
+    }
+
+    public static int generateNextId() {
+        System.out.println(idCount);
+        return idCount++;
     }
 
     public int getId() {
@@ -84,5 +91,18 @@ public class Person {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", gender=" + gender +
+                ", age=" + age +
+                ", dateOfBirth=" + dateOfBirth +
+                ", email='" + email + '\'' +
+                '}';
     }
 }
