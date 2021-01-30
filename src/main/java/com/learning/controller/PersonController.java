@@ -37,6 +37,11 @@ public class PersonController {
         return personService.findByNameAndId(name, id);
     }
 
+    @DeleteMapping("/remove/{id}")
+    public Person removePersonById(@PathVariable Integer id) {
+        return personService.removePersonById(id);
+    }
+
     @PostMapping("/add")
     public Person createPerson(@RequestBody Person person) {
         return personService.createPerson(person);

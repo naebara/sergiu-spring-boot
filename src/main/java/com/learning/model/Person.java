@@ -33,7 +33,6 @@ public class Person {
     }
 
     public static int generateNextId() {
-        System.out.println(idCount);
         return idCount++;
     }
 

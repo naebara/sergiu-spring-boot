@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PersonService {
@@ -43,8 +44,16 @@ public class PersonService {
         ArrayList<Person> people = new ArrayList<>();
         people.add(new Person("John", "Doe", Gender.MALE, 23, LocalDate.of(1998, Month.MARCH, 5), "john.doe@gmail.com"));
         people.add(new Person("Mary", "Misk", Gender.FEMALE, 67, LocalDate.of(1954, Month.JANUARY, 8), "john.doe@gmail.com"));
-        System.out.println(Person.generateNextId());
         return people;
     }
 
+    public Person removePersonById(Integer id) {
+        Person removedPerson = this.personList.stream().filter(p -> p.getId() == id).findFirst()
+                .orElseThrow(() -> new ResourceNotFoundException("Person with id " + id + " not found"));
+
+        this.personList = this.personList.stream().filter(p -> p.getId() != id)
+                .collect(Collectors.toList());
+        return removedPerson;
+
+    }
 }
