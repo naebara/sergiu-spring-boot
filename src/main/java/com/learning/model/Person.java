@@ -2,24 +2,45 @@ package com.learning.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.learning.enums.Gender;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Person {
 
     static int idCount = 1;
 
-    int id;
-    String firstName;
-    String lastName;
-    Gender gender;
-    int age;
-    @JsonFormat(pattern = "dd-MM-yyyy")
-    LocalDate dateOfBirth;
-    String email;
+    private int id;
 
-    public Person() {
-    }
+    @NotEmpty(message = "First name must not be empty")
+    @Size(min = 3, max = 20, message = "First name must be in range(2,20)")
+    private String firstName;
+
+    @NotEmpty(message = "First name must not be empty")
+    @Size(min = 3, max = 20, message = "First name must be in range(2,20)")
+    private String lastName;
+
+    private Gender gender;
+
+    @Min(value = 1, message = "Age must be greater or equal to 1 ")
+    @Max(value = 120, message = "Age must be less or equal to 120")
+    private int age;
+
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    @Past
+    private LocalDate dateOfBirth;
+
+    @NotNull(message = "{validation.email.NotNull}")
+    private String email;
+
 
     public Person(String firstName, String lastName, Gender gender, int age, LocalDate dateOfBirth, String email) {
         this.id = idCount;
@@ -34,74 +55,5 @@ public class Person {
 
     public static int generateNextId() {
         return idCount++;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", gender=" + gender +
-                ", age=" + age +
-                ", dateOfBirth=" + dateOfBirth +
-                ", email='" + email + '\'' +
-                '}';
     }
 }

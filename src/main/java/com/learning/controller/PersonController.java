@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -43,7 +44,8 @@ public class PersonController {
     }
 
     @PostMapping("/add")
-    public Person createPerson(@RequestBody Person person) {
+    public Person createPerson(@RequestBody @Valid Person person) {
+        logger.info("Trecut prin controller");
         return personService.createPerson(person);
     }
 }

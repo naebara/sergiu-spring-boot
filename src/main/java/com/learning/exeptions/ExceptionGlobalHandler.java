@@ -25,4 +25,15 @@ public class ExceptionGlobalHandler {
         return new ResponseEntity<>(er, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(Throwable.class)
+    public ResponseEntity<ExeptionResponse> handleGeneralErrors(Throwable exception) {
+        ExeptionResponse er = new ExeptionResponse();
+        er.setMessage(exception.getMessage());
+        er.setTime(LocalDateTime.now());
+        er.setErrorCode("Error");
+
+        logger.error(exception.getMessage(), exception);
+        return new ResponseEntity<>(er, HttpStatus.BAD_REQUEST);
+    }
+
 }

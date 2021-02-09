@@ -1,12 +1,11 @@
 package com.learning.service;
 
-import com.learning.enums.Gender;
 import com.learning.exeptions.ResourceNotFoundException;
 import com.learning.model.Person;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,7 +13,9 @@ import java.util.stream.Collectors;
 @Service
 public class PersonService {
 
-    List<Person> personList = findAllPersons();
+    List<Person> personList = new ArrayList<>();
+
+    private Logger logger = LoggerFactory.getLogger(PersonService.class);
 
     public List<Person> findAll() {
         return this.personList;
@@ -38,13 +39,6 @@ public class PersonService {
                 .filter(person -> person.getId() == id && person.getFirstName().equals(name))
                 .findFirst()
                 .orElseThrow(() -> new ResourceNotFoundException("Person with id : " + id + " and name: " + name + " not found!"));
-    }
-
-    private List<Person> findAllPersons() {
-        ArrayList<Person> people = new ArrayList<>();
-        people.add(new Person("John", "Doe", Gender.MALE, 23, LocalDate.of(1998, Month.MARCH, 5), "john.doe@gmail.com"));
-        people.add(new Person("Mary", "Misk", Gender.FEMALE, 67, LocalDate.of(1954, Month.JANUARY, 8), "john.doe@gmail.com"));
-        return people;
     }
 
     public Person removePersonById(Integer id) {
