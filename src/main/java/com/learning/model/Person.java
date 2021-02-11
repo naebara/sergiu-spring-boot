@@ -7,6 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
 
@@ -14,10 +18,11 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class Person {
 
-    static int idCount = 1;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @NotEmpty(message = "First name must not be empty")
@@ -41,19 +46,12 @@ public class Person {
     @NotNull(message = "{validation.email.NotNull}")
     private String email;
 
-
     public Person(String firstName, String lastName, Gender gender, int age, LocalDate dateOfBirth, String email) {
-        this.id = idCount;
-        idCount++;
         this.firstName = firstName;
         this.lastName = lastName;
         this.gender = gender;
         this.age = age;
         this.dateOfBirth = dateOfBirth;
         this.email = email;
-    }
-
-    public static int generateNextId() {
-        return idCount++;
     }
 }

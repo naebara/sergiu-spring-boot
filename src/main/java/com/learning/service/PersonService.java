@@ -22,7 +22,6 @@ public class PersonService {
     }
 
     public Person createPerson(Person person) {
-        person.setId(Person.generateNextId());
         this.personList.add(person);
         return personList.get(personList.size() - 1);
     }
