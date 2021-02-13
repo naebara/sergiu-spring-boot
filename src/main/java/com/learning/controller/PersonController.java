@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "/person")
@@ -19,23 +18,29 @@ public class PersonController {
     private Logger logger = LoggerFactory.getLogger(PersonController.class);
 
     @GetMapping("/getAllPersons")
-    public List<Person> getAllPerson() {
-        return personService.findAll();
+    public Iterable<Person> getAllPerson() {
+        return personService.getAllPersons();
     }
 
     @GetMapping("/getPersonById/{someId}")
     public Person getPersonById(@PathVariable(value = "someId") Integer personId) {
         logger.info("Get person by id called");
 
-        Person personById = personService.findPersonById(personId); // error
+        Person personById = personService.findPersonById(personId);
 
         logger.info("Get person by id finished successfuly");
         return personById;
     }
 
+    @PutMapping("/update")
+    public Person updatePerson(@RequestBody @Valid Person person) {
+        return personService.updatePerson(person);
+
+    }
+
     @GetMapping("/getPersonByIdAndName/{id}/{name}")
     public Person getByIdAndName(@PathVariable Integer id, @PathVariable String name) {
-        return personService.findByNameAndId(name, id);
+        return personService.findByFirstNameAndId(name, id);
     }
 
     @DeleteMapping("/remove/{id}")
