@@ -26,6 +26,8 @@ public class Person {
     @NotEmpty(message = "First name must not be empty")
     @Size(min = 3, max = 20, message = "First name must be in range(2,20)")
     private String firstName;
+    
+    private String CNP;
 
     @NotEmpty(message = "First name must not be empty")
     @Size(min = 3, max = 20, message = "First name must be in range(2,20)")
