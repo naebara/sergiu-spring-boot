@@ -1,6 +1,8 @@
 package com.learning.controller;
 
+import com.learning.dto.CarDto;
 import com.learning.dto.PersonDto;
+import com.learning.mapper.CarMapper;
 import com.learning.mapper.PersonMapper;
 import com.learning.model.Person;
 import com.learning.service.PersonService;
@@ -23,6 +25,8 @@ public class PersonController {
 
     @Autowired
     private PersonMapper personMapper;
+    @Autowired
+    private CarMapper carMapper;
 
     @GetMapping("/getAllPersons")
     public List<PersonDto> getAllPerson() {
@@ -67,8 +71,15 @@ public class PersonController {
     }
 
     @PostMapping("/add")
-    public Person createPerson(@RequestBody @Valid Person person) {
+    public PersonDto createPerson(@RequestBody @Valid Person person) {
         logger.info("Trecut prin controller");
-        return personService.createPerson(person);
+        Person p = personService.createPerson(person);
+        List<CarDto> carDtos = p.getCars().stream()
+                .map(car -> carMapper.mapToDto(car))
+                .collect(Collectors.toList());
+        PersonDto personDto = personMapper.mapToDto(p);
+        personDto.setCars(carDtos);
+
+        return personDto;
     }
 }

@@ -1,7 +1,9 @@
 package com.learning.service;
 
 import com.learning.exeptions.ResourceNotFoundException;
+import com.learning.model.Car;
 import com.learning.model.Person;
+import com.learning.repo.CarRepository;
 import com.learning.repo.PersonRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,9 @@ public class PersonService {
     @Autowired
     private PersonRepository personRepository;
 
+    @Autowired
+    private CarRepository carRepository;
+
     private Logger logger = LoggerFactory.getLogger(PersonService.class);
 
     public List<Person> getAllPersons() {
@@ -24,7 +29,11 @@ public class PersonService {
     }
 
     public Person createPerson(Person person) {
-        personRepository.save(person);
+        Car car = new Car("Audi", "a4", 112);
+        person.getCars().add(car);
+        Person p = personRepository.save(person);
+        car.setPerson(p);
+        carRepository.save(car);
         return person;
     }
 

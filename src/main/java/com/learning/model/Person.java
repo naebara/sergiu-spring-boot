@@ -1,6 +1,7 @@
 package com.learning.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.learning.controller.MyEmail;
 import com.learning.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,6 +11,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -26,7 +29,7 @@ public class Person {
     @NotEmpty(message = "First name must not be empty")
     @Size(min = 3, max = 20, message = "First name must be in range(2,20)")
     private String firstName;
-    
+
     private String CNP;
 
     @NotEmpty(message = "First name must not be empty")
@@ -44,14 +47,10 @@ public class Person {
     private LocalDate dateOfBirth;
 
     @NotNull(message = "{validation.email.NotNull}")
+    @MyEmail
     private String email;
 
-    public Person(String firstName, String lastName, Gender gender, int age, LocalDate dateOfBirth, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.gender = gender;
-        this.age = age;
-        this.dateOfBirth = dateOfBirth;
-        this.email = email;
-    }
+    @OneToMany(mappedBy = "person")
+    private List<Car> cars = new ArrayList<>();
+
 }
