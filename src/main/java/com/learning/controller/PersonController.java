@@ -31,31 +31,39 @@ public class PersonController {
     @GetMapping("/getAllPersons")
     public List<PersonDto> getAllPerson() {
         List<Person> persons = personService.getAllPersons();
-//        List<PersonDto> l = new ArrayList<>();
-//        for (int i = 0; i < persons.size(); i++) {
-//            l.add(personMapper.mapToDto(persons.get(i)));
-//        }
-//        return l;
-//
         return persons.stream()
-                .map(personMapper::mapToDto)
+                .map(this::mapToPersonDto)
+                .collect(Collectors.toList());
+    }
+
+    private PersonDto mapToPersonDto(Person person) {
+        PersonDto personDto = personMapper.mapToDto(person);
+        List<CarDto> carDtos = getMappedDtoCars(person);
+        personDto.setCars(carDtos);
+        return personDto;
+    }
+
+    private List<CarDto> getMappedDtoCars(Person person) {
+        return person.getCars()
+                .stream()
+                .map(carMapper::mapToDto)
                 .collect(Collectors.toList());
     }
 
 
     @GetMapping("/getPersonById/{someId}")
-    public Person getPersonById(@PathVariable(value = "someId") Integer personId) {
+    public PersonDto getPersonById(@PathVariable(value = "someId") Integer personId) {
         logger.info("Get person by id called");
 
         Person personById = personService.findPersonById(personId);
 
         logger.info("Get person by id finished successfuly");
-        return personById;
+        return mapToPersonDto(personById);
     }
 
     @PutMapping("/update")
-    public Person updatePerson(@RequestBody @Valid Person person) {
-        return personService.updatePerson(person);
+    public PersonDto updatePerson(@RequestBody @Valid Person person) {
+        return mapToPersonDto(personService.updatePerson(person));
 
     }
 
@@ -66,8 +74,8 @@ public class PersonController {
     }
 
     @DeleteMapping("/remove/{id}")
-    public Person removePersonById(@PathVariable Integer id) {
-        return personService.removePersonById(id);
+    public PersonDto removePersonById(@PathVariable Integer id) {
+        return personMapper.mapToDto(personService.removePersonById(id));
     }
 
     @PostMapping("/add")

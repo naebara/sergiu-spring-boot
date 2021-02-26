@@ -31,9 +31,8 @@ public class PersonService {
     public Person createPerson(Person person) {
         Car car = new Car("Audi", "a4", 112);
         person.getCars().add(car);
+        car.setPerson(person);
         Person p = personRepository.save(person);
-        car.setPerson(p);
-        carRepository.save(car);
         return person;
     }
 

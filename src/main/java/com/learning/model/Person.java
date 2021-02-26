@@ -30,8 +30,6 @@ public class Person {
     @Size(min = 3, max = 20, message = "First name must be in range(2,20)")
     private String firstName;
 
-    private String CNP;
-
     @NotEmpty(message = "First name must not be empty")
     @Size(min = 3, max = 20, message = "First name must be in range(2,20)")
     private String lastName;
@@ -50,7 +48,7 @@ public class Person {
     @MyEmail
     private String email;
 
-    @OneToMany(mappedBy = "person")
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<Car> cars = new ArrayList<>();
 
 }

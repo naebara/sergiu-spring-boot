@@ -34,6 +34,4 @@ public class Car {
     @JoinColumn(name = "person_id")
     private Person person;
 
-    @ManyToOne
-    private Person seller;
 }
