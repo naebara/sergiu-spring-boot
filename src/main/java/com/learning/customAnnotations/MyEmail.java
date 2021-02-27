@@ -1,4 +1,4 @@
-package com.learning.controller;
+package com.learning.customAnnotations;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

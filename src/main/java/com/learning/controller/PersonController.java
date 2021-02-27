@@ -1,9 +1,12 @@
 package com.learning.controller;
 
 import com.learning.dto.CarDto;
+import com.learning.dto.DrivingLicenseDto;
 import com.learning.dto.PersonDto;
 import com.learning.mapper.CarMapper;
+import com.learning.mapper.DrivingLicenseMapper;
 import com.learning.mapper.PersonMapper;
+import com.learning.model.DrivingLicense;
 import com.learning.model.Person;
 import com.learning.service.PersonService;
 import org.slf4j.Logger;
@@ -27,6 +30,9 @@ public class PersonController {
     private PersonMapper personMapper;
     @Autowired
     private CarMapper carMapper;
+
+    @Autowired
+    private DrivingLicenseMapper drivingLicenseMapper;
 
     @GetMapping("/getAllPersons")
     public List<PersonDto> getAllPerson() {
@@ -82,11 +88,17 @@ public class PersonController {
     public PersonDto createPerson(@RequestBody @Valid Person person) {
         logger.info("Trecut prin controller");
         Person p = personService.createPerson(person);
+
         List<CarDto> carDtos = p.getCars().stream()
                 .map(car -> carMapper.mapToDto(car))
                 .collect(Collectors.toList());
+
+        DrivingLicense drivingLicense = p.getDrivingLicense();
+        DrivingLicenseDto drivingLicenseDto = drivingLicenseMapper.mapToDto(drivingLicense);
+
         PersonDto personDto = personMapper.mapToDto(p);
         personDto.setCars(carDtos);
+        personDto.setDrivingLicenseDto(drivingLicenseDto);
 
         return personDto;
     }

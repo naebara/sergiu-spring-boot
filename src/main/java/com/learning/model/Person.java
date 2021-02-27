@@ -1,7 +1,7 @@
 package com.learning.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.learning.controller.MyEmail;
+import com.learning.customAnnotations.MyEmail;
 import com.learning.enums.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -50,5 +50,9 @@ public class Person {
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
     private List<Car> cars = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "driving_license_id")
+    private DrivingLicense drivingLicense;
 
 }

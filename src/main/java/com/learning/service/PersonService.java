@@ -1,7 +1,6 @@
 package com.learning.service;
 
 import com.learning.exeptions.ResourceNotFoundException;
-import com.learning.model.Car;
 import com.learning.model.Person;
 import com.learning.repo.CarRepository;
 import com.learning.repo.PersonRepository;
@@ -29,9 +28,7 @@ public class PersonService {
     }
 
     public Person createPerson(Person person) {
-        Car car = new Car("Audi", "a4", 112);
-        person.getCars().add(car);
-        car.setPerson(person);
+
         Person p = personRepository.save(person);
         return person;
     }
