@@ -2,9 +2,11 @@ package com.learning.controller;
 
 import com.learning.dto.CarDto;
 import com.learning.dto.DrivingLicenseDto;
+import com.learning.dto.EventDto;
 import com.learning.dto.PersonDto;
 import com.learning.mapper.CarMapper;
 import com.learning.mapper.DrivingLicenseMapper;
+import com.learning.mapper.EventMapper;
 import com.learning.mapper.PersonMapper;
 import com.learning.model.DrivingLicense;
 import com.learning.model.Person;
@@ -32,6 +34,9 @@ public class PersonController {
     private CarMapper carMapper;
 
     @Autowired
+    private EventMapper eventMapper;
+
+    @Autowired
     private DrivingLicenseMapper drivingLicenseMapper;
 
     @GetMapping("/getAllPersons")
@@ -46,6 +51,12 @@ public class PersonController {
         PersonDto personDto = personMapper.mapToDto(person);
         List<CarDto> carDtos = getMappedDtoCars(person);
         personDto.setCars(carDtos);
+        List<EventDto> eventDtos = person.getEvents()
+                .stream()
+                .map(eventMapper::mapToEventDto)
+                .collect(Collectors.toList());
+//               .forEach(x -> personDto.getEvents().add(x));
+        personDto.setEvents(eventDtos);
         return personDto;
     }
 

@@ -24,6 +24,8 @@ public class PersonDto {
     private LocalDate dateOfBirth;
     private String email;
     private List<CarDto> cars = new ArrayList<>();
+    private List<EventDto> events = new ArrayList<>();
+
     private DrivingLicenseDto drivingLicenseDto;
 
     public PersonDto(int id, String firstName, String lastName, Gender gender, int age, LocalDate dateOfBirth, String email) {

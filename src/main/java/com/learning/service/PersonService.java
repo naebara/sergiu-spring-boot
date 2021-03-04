@@ -1,8 +1,10 @@
 package com.learning.service;
 
 import com.learning.exeptions.ResourceNotFoundException;
+import com.learning.model.Event;
 import com.learning.model.Person;
 import com.learning.repo.CarRepository;
+import com.learning.repo.EventRepository;
 import com.learning.repo.PersonRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +20,9 @@ public class PersonService {
     private PersonRepository personRepository;
 
     @Autowired
+    private EventRepository eventRepository;
+
+    @Autowired
     private CarRepository carRepository;
 
     private Logger logger = LoggerFactory.getLogger(PersonService.class);
@@ -28,6 +33,15 @@ public class PersonService {
     }
 
     public Person createPerson(Person person) {
+        
+        Event e = new Event();
+        e.setPrice(36);
+        e.setEventName("Paradise Smoke");
+        e.setLocation("Insulele Plouate");
+        e.setRank(3);
+        eventRepository.save(e);
+
+        person.getEvents().add(e);
 
         Person p = personRepository.save(person);
         return person;

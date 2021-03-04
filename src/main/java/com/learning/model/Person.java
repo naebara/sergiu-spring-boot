@@ -55,4 +55,12 @@ public class Person {
     @JoinColumn(name = "driving_license_id")
     private DrivingLicense drivingLicense;
 
+    @ManyToMany
+    @JoinTable(
+            name = "event_participations",
+            joinColumns = @JoinColumn(name = "person_id"),
+            inverseJoinColumns = @JoinColumn(name = "event_id")
+    )
+    private List<Event> events = new ArrayList<>();
+
 }
