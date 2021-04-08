@@ -6,6 +6,7 @@ import com.learning.model.Person;
 import com.learning.repo.CarRepository;
 import com.learning.repo.EventRepository;
 import com.learning.repo.PersonRepository;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Setter
 public class PersonService {
 
     @Autowired
@@ -29,7 +31,6 @@ public class PersonService {
 
     public List<Person> getAllPersons() {
         return personRepository.findAll();
-
     }
 
     public Person createPerson(Person person) {
@@ -63,19 +64,21 @@ public class PersonService {
         return person;
     }
 
-    public Person updatePerson(Person person) {
-        Person p = findPersonById(person.getId());
-        updatePersonFields(person, p);
-        personRepository.save(p);
-        return p;
+
+
+    public Person updatePerson(Person newPerson) {
+        Person oldPerson = findPersonById(newPerson.getId());
+        updatePersonFields(newPerson, oldPerson);
+        personRepository.save(oldPerson);
+        return oldPerson;
     }
 
-    private void updatePersonFields(Person person, Person p) {
-        p.setDateOfBirth(person.getDateOfBirth());
-        p.setAge(person.getAge());
-        p.setEmail(person.getEmail());
-        p.setFirstName(person.getFirstName());
-        p.setLastName(person.getLastName());
-        p.setGender(person.getGender());
+    public void updatePersonFields(Person newPerson, Person oldPerson) {
+        oldPerson.setDateOfBirth(newPerson.getDateOfBirth());
+        oldPerson.setAge(newPerson.getAge());
+        oldPerson.setEmail(newPerson.getEmail());
+        oldPerson.setFirstName(newPerson.getFirstName());
+        oldPerson.setLastName(newPerson.getLastName());
+        oldPerson.setGender(newPerson.getGender());
     }
 }

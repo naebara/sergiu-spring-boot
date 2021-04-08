@@ -11,5 +11,4 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
 
     Optional<Person> findByFirstNameAndId(String firstName, int id);
 
-
 }
